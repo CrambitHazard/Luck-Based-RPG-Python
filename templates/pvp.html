@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Local PvP Battle{% endblock %}
+{% block content %}
+<h1 class="text-center">Local PvP Battle</h1>
+<div class="row">
+  <div class="col-md-5 text-center">
+    <h3>Player 1: {{ player1.race }} (Level {{ player1.level }})</h3>
+    <img src="{{ url_for('static', filename='images/' ~ player1.race|lower ~ '.png') }}" alt="{{ player1.race }}" class="img-fluid animate__animated animate__fadeInLeft">
+    <p><strong>HP:</strong> {{ player1.current_health }} / {{ player1.base_health }}</p>
+    <p><strong>Ability:</strong> {{ player1.ability }}</p>
+  </div>
+  <div class="col-md-2 text-center">
+    <h2>VS</h2>
+    <h4>Turn: Player {{ turn }}</h4>
+  </div>
+  <div class="col-md-5 text-center">
+    <h3>Player 2: {{ player2.race }} (Level {{ player2.level }})</h3>
+    <img src="{{ url_for('static', filename='images/' ~ player2.race|lower ~ '.png') }}" alt="{{ player2.race }}" class="img-fluid animate__animated animate__fadeInRight">
+    <p><strong>HP:</strong> {{ player2.current_health }} / {{ player2.base_health }}</p>
+    <p><strong>Ability:</strong> {{ player2.ability }}</p>
+  </div>
+</div>
+<hr>
+{% if not game_over %}
+<form method="post" class="text-center">
+    <button type="submit" name="action" value="attack" class="btn btn-danger animate__animated animate__shakeX">Attack</button>
+    <button type="submit" name="action" value="defend" class="btn btn-primary animate__animated animate__shakeX">Defend</button>
+    <button type="submit" name="action" value="ability" class="btn btn-success animate__animated animate__shakeX">Use Ability</button>
+</form>
+{% endif %}
+<hr>
+<h4>Battle Log:</h4>
+<div class="alert alert-secondary" style="height:250px; overflow-y:scroll;">
+  {% for log in pvp_log %}
+    <p>{{ log }}</p>
+  {% endfor %}
+</div>
+{% if game_over %}
+<div class="alert alert-danger text-center"><strong>Game Over!</strong></div>
+<a href="{{ url_for('restart') }}" class="btn btn-secondary">Restart Game</a>
+{% endif %}
+<a href="{{ url_for('index') }}" class="btn btn-warning">Back to Main</a>
+{% endblock %}

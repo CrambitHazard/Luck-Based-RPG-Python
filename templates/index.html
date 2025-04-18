@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Your Character{% endblock %}
+{% block content %}
+<h1 class="text-center">Your Character</h1>
+<div class="row">
+  <div class="col-md-4 text-center">
+    <img src="{{ url_for('static', filename='images/' ~ character.race|lower ~ '.png') }}" alt="{{ character.race }}" class="img-fluid animate__animated animate__fadeInLeft">
+  </div>
+  <div class="col-md-8">
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Race:</strong> {{ character.race }}</li>
+        <li class="list-group-item"><strong>Level:</strong> {{ character.level }}</li>
+        <li class="list-group-item"><strong>EXP:</strong> {{ character.exp }} / {{ character.level * 100 }}</li>
+        <li class="list-group-item"><strong>Strength:</strong> {{ character.strength }}</li>
+        <li class="list-group-item"><strong>Intelligence:</strong> {{ character.intelligence }}</li>
+        <li class="list-group-item"><strong>Wisdom:</strong> {{ character.wisdom }}</li>
+        <li class="list-group-item"><strong>Constitution:</strong> {{ character.constitution }}</li>
+        <li class="list-group-item"><strong>Speed:</strong> {{ character.speed }}</li>
+        <li class="list-group-item"><strong>Mana:</strong> {{ character.mana }}</li>
+        <li class="list-group-item"><strong>Potions:</strong> {{ character.potions }}</li>
+        <li class="list-group-item"><strong>Gold:</strong> {{ character.gold }}</li>
+    </ul>
+    <br>
+    <div class="card">
+      <div class="card-header">
+        Abilities
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          {% set abilities = character.ability.split(" | ") %}
+          {% for ability in abilities %}
+             <strong>{{ ability }}</strong>: 
+             {% if ability in ability_descriptions %}
+                {{ ability_descriptions[ability] }}
+             {% else %}
+                No description available.
+             {% endif %}
+             <br>
+          {% endfor %}
+        </p>
+      </div>
+    </div>
+    <br>
+    <a href="{{ url_for('battle') }}" class="btn btn-primary animate__animated animate__pulse">Enter Battle</a>
+    <a href="{{ url_for('shop') }}" class="btn btn-success animate__animated animate__pulse">Shop</a>
+    <a href="{{ url_for('pvp') }}" class="btn btn-warning animate__animated animate__pulse">Local PvP</a>
+    <a href="{{ url_for('restart') }}" class="btn btn-secondary animate__animated animate__pulse">Restart Game</a>
+  </div>
+</div>
+{% endblock %}

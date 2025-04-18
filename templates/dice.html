@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rolling the Dice...</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      body {
+          background: url("{{ url_for('static', filename='images/fantasy_bg.jpg') }}") no-repeat center center fixed;
+          background-size: cover;
+          font-family: "Cinzel", serif;
+          color: #fff;
+          text-align: center;
+          padding-top: 100px;
+      }
+      .dice {
+          font-size: 120px;
+          color: #fff;
+          text-shadow: 2px 2px 4px #000;
+      }
+      .note {
+          margin-top: 50px;
+          font-size: 18px;
+          color: #ddd;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+      <h1 class="animate__animated animate__bounceIn">Rolling the Dice...</h1>
+      <div id="dice" class="dice animate__animated animate__rotateIn"></div>
+      <div class="note">Your destiny (and abilities) are about to be revealed!</div>
+    </div>
+    <script>
+      // Simple dice rolling simulation
+      function rollDice() {
+          const dice = document.getElementById('dice');
+          let roll = Math.floor(Math.random() * 11) + 1;
+          dice.textContent = roll;
+      }
+      // Roll every 300ms for 3 seconds, then redirect to the main page
+      let interval = setInterval(rollDice, 300);
+      setTimeout(function(){
+          clearInterval(interval);
+          window.location.href = "{{ url_for('index') }}";
+      }, 3000);
+    </script>
+</body>
+</html>
